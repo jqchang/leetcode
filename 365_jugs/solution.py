@@ -2,35 +2,29 @@ from queue import Queue
 
 class Solution(object):
     def measureHelper(self,cx,mx,cy,my,z,visited,Q):
-        visited[cy][cx] = True
+        visited.add((cx,cy))
         if(cx == z or cy == z or cx+cy == z):
-            print("measureHelper return True")
             return True
         else:
-            Q.put((mx,mx,cy,my,z,visited,Q))
-            Q.put((cx,mx,my,my,z,visited,Q))
-            Q.put((0,mx,cy,my,z,visited,Q))
-            Q.put((cx,mx,0,my,z,visited,Q))
+            Q.put((mx,cy))
+            Q.put((cx,my))
+            Q.put((0,cy))
+            Q.put((cx,0))
             t = cx+cy
             y2x = min(mx,t)
             x2y = min(my,t)
-            Q.put((y2x,mx,t-y2x,my,z,visited,Q))
-            Q.put((t-x2y,mx,x2y,my,z,visited,Q))
-        print("measureHelper return False")
+            Q.put((y2x,t-y2x))
+            Q.put((t-x2y,x2y))
         return False
 
     def canMeasureWater(self, x, y, z):
-        visited = [[False for i in range(x+1)] for j in range(y+1)]
+        visited = set()
         Q = Queue()
-        Q.put((0,x,0,y,z,visited,Q))
+        Q.put((0,0))
         while(not Q.empty()):
-            args = Q.get()
-            print(args[:-2])
-            cx,cy = args[0],args[2]
-            if not visited[cy][cx]:
-                r = self.measureHelper(*args)
+            cx,cy = Q.get()
+            if (cx,cy) not in visited:
+                r = self.measureHelper(cx,x,cy,y,z,visited,Q)
                 if r:
-                    print("canMeasureWater return True")
                     return True
-        print("canMeasureWater return False")
         return False

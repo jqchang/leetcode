@@ -21,7 +21,7 @@ expected = [
     False,
     False,
     False,
-    False
+    True
 ]
 result = list()
 for i in range(len(testCases)):
