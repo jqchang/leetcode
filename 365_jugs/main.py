@@ -5,22 +5,26 @@ import time
 
 def test(myFunc,args,exp):
     t = myFunc(*args)
-    match = t==exp
-    if not match:
-        print("Mismatch for test case",args,"- encountered",t,"expected",exp)
-    return match
+    print("Test case: {}, answer:{}, expected:{}".format(args,t,exp))
+    return t
 
 sol = Solution()
 testCases = [
-    (3,4,5),
+    (3,5,4),
     (2,6,5),
+    (0,0,1),
+    (1,2,3),
+    (22003,31237,1)
 ]
 expected = [
     True,
     False,
+    False,
+    False,
+    False
 ]
 result = list()
 for i in range(len(testCases)):
-    result.append(test(sol.canMeasureWater,testCases[i],expected[i]))
+    t = test(sol.canMeasureWater,testCases[i],expected[i])
 
 print("Completed in ", time.clock()*1000, " ms");
